@@ -33,7 +33,7 @@ export const register = async (req, res) => {
         url: mycloud.secure_url,
       },
       otp,
-      otp_expiry: new Date(Date.now() + process.env.OTP_EXPIRE * 60 * 1000),
+      otp_expiry: new Date(Date.now() + process.env.OTP_EXPIRE * 60 * 10000),
     });
 
     await sendMail(email, "Verify your account", `Your OTP is ${otp}`);
@@ -113,69 +113,6 @@ export const logout = async (req, res) => {
         expires: new Date(Date.now()),
       })
       .json({ success: true, message: "Logged out successfully" });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
-
-export const addTask = async (req, res) => {
-  try {
-    const { title, description } = req.body;
-
-    const user = await User.findById(req.user._id);
-
-    user.tasks.push({
-      title,
-      description,
-      completed: false,
-      createdAt: new Date(Date.now()),
-    });
-
-    await user.save();
-
-    res.status(200).json({ success: true, message: "Task added successfully" });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
-
-export const removeTask = async (req, res) => {
-  try {
-    const { taskId } = req.params;
-
-    const user = await User.findById(req.user._id);
-
-    user.tasks = user.tasks.filter(
-      (task) => task._id.toString() !== taskId.toString()
-    );
-
-    await user.save();
-
-    res
-      .status(200)
-      .json({ success: true, message: "Task removed successfully" });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
-
-export const updateTask = async (req, res) => {
-  try {
-    const { taskId } = req.params;
-
-    const user = await User.findById(req.user._id);
-
-    user.task = user.tasks.find(
-      (task) => task._id.toString() === taskId.toString()
-    );
-
-    user.task.completed = !user.task.completed;
-
-    await user.save();
-
-    res
-      .status(200)
-      .json({ success: true, message: "Task Updated successfully" });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

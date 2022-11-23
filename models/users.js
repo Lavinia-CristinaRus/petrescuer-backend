@@ -31,15 +31,6 @@ const userSchema = new mongoose.Schema({
     default: Date.now,
   },
 
-  tasks: [
-    {
-      title: "String",
-      description: "String",
-      completed: Boolean,
-      createdAt: Date,
-    },
-  ],
-
   verified: {
     type: Boolean,
     default: false,

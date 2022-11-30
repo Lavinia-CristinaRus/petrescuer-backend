@@ -24,7 +24,7 @@ app.use(
   })
 );
 app.use(cors({
-  origin: 'http://localhost:19006/',
+  origin: 'http://localhost:19006',
   credentials: true, 
   methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE'],
   exposedHeaders: ["set-cookie"]

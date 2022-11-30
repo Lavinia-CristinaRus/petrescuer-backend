@@ -13,7 +13,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
   secret:'blablabla',
-  store: store,
   resave:true,
   saveUninitialized:false,
   cookie:{maxAge: 20000 * 60, sameSite: 'none', secure: false}
